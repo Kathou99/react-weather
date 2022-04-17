@@ -1,117 +1,60 @@
 import React from "react";
-import "./Forecast.css";
+import { useState } from "react";
+import { useEffect } from "react";
 
-export default function Forecast() {
-  return (
-    <div className="forecast">
-      <div className="row">
-        <div className="col-2">
-          Sat 1
-          <br />
-          <img
-            src="http://openweathermap.org/img/wn/13d@2x.png"
-            alt=""
-            className="image"
-            id="icon"
-          />
-          <br />
-          Hi/lo
-        </div>
+import axios from "axios";
 
-        <div className="col-2">
-          Sun 2
-          <br />
-          <img
-            src="http://openweathermap.org/img/wn/10n@2x.png"
-            alt=""
-            className="image"
-            id="icon"
-          />
-          <br />
-          Hi/lo
-        </div>
+import ForecastDay from "./WeatherForecastDay";
 
-        <div className="col-2">
-          Mon 3
-          <br />
-          <img
-            src="http://openweathermap.org/img/wn/09d@2x.png"
-            alt=""
-            className="image"
-            id="icon"
-          />
-          <br />
-          Hi/lo
-        </div>
+function Forecasts(props) {
+  const [loaded, setLoaded] = useState(false);
+  const [forecastData, setForecastData] = useState(null);
 
-        <div className="col-2">
-          Tue 4
-          <br />
-          <img
-            src="http://openweathermap.org/img/wn/13d@2x.png"
-            alt=""
-            className="image"
-            id="icon"
-          />
-          <br />
-          Hi/lo
-        </div>
+  useEffect(() => {
+    setLoaded(false);
+  }, [props.coordinates]);
 
-        <div className="col-2">
-          Wed 5
-          <br />
-          <img
-            src="http://openweathermap.org/img/wn/02d@2x.png"
-            alt=""
-            className="image"
-            id="icon"
-          />
-          <br />
-          Hi/lo
-        </div>
+  function handleResponse(response) {
+    setForecastData(response.data.daily);
+    setLoaded(true);
+  }
 
-        <div className="col-2">
-          Thu 6
-          <br />
-          <img
-            src="http://openweathermap.org/img/wn/02d@2x.png"
-            alt=""
-            className="image"
-            id="icon"
-          />
-          <br />
-          Hi/lo
-        </div>
+  function processForecast() {
+    console.log(props)
+    let longitude = props.coordinates.lon;
+    let latitude = props.coordinates.lat;
 
-        <div className="col-2">
-          Fri 7
-          <br />
-          <img
-            src="http://openweathermap.org/img/wn/02d@2x.png"
-            alt=""
-            className="image"
-            id="icon"
-          />
-          <br />
-          Hi/lo
-        </div>
+    const unitAPI = `metric`;
+    const keyAPI = `b234ec4305478a96889b3ecb891640e3`;
+    const urlAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${keyAPI}&units=${unitAPI}`;
+    axios.get(urlAPI).then(handleResponse);
+  }
 
-        <div className="col-2">
-          Sat 8
-          <br />
-          <img
-            src="http://openweathermap.org/img/wn/03d@2x.png"
-            alt=""
-            className="image"
-            id="icon"
-          />
-          <br />
-          Hi/lo
+  if (loaded) {
+    return (
+      <div id className="weather-forecast px-2 mt-2" >
+        <p className="subtitle fs-5">
+          7 Days <strong>FORECAST:</strong>
+        </p>
+
+        <div className="forecast-days container-fluid" id="forecast">
+          <div className="divider mt-4 mb-4" id="forecastdays"></div>
+          <div >
+            <ForecastDay data={forecastData[1]} />
+            <ForecastDay data={forecastData[2]} />
+            <ForecastDay data={forecastData[3]} />
+            <ForecastDay data={forecastData[4]} />
+            <ForecastDay data={forecastData[5]} />
+            <ForecastDay data={forecastData[6]} />
+            <ForecastDay data={forecastData[7]} />
+          </div>
         </div>
       </div>
-
-      <br />
-      <footer id="text-forcast">Daily forecast for the next 7 days</footer>
-    </div>
-  );
+    );
+  } else {
+    processForecast();
+    return <div className="text-warning">Loading...</div>;
+  }
 }
+
+export default Forecasts;

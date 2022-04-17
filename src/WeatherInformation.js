@@ -1,106 +1,189 @@
 import React from "react";
-import LocationInfo from "./LocationInfo";
-import TempConversion from "./TempConversion";
-import { convertToFahrenheit } from "./constants";
-import "./WeatherInformation.css";
+import { useState } from "react";
 
-export default function WeatherInformation({
-  weatherInfo,
-  locationInfo,
-  useFahrenheit,
-  setUseFahrenheit,
-}) {
-  if (weatherInfo) {
+function WeatherTemp(props) {
+  console.log(props)
+  const [unit, setUnit] = useState(`metric`);
+
+  function showImperial(event) {
+    event.preventDefault();
+    setUnit(`imperial`);
+  }
+
+  function showMetric(event) {
+    event.preventDefault();
+    setUnit(`metric`);
+  }
+
+  if (unit === `metric`) {
     return (
-      <div className="WeatherInformation">
-        <div className="row top-level-row">
-          <div className="col">
-            {locationInfo ? (
-              <LocationInfo
-                name={locationInfo.name}
-                country-code={locationInfo.country}
-              />
-            ) : (
-              <h3>Loading...</h3>
-            )}
-            <br />
-            <div id="humidity">
-              Humidity:{" "}
-              <span id="current-humidity">{weatherInfo.humidity}%</span>
-            </div>
-            <div id="wind-speed">
-              Wind:{" "}
-              <span id="current-wind-speed">
-                {Math.round(weatherInfo.windSpeed)} km/h
-              </span>
-            </div>
-            <div id="feels-like">
-              Feels like:{" "}
-              <span id="current-wind-chill">
-                {useFahrenheit
-                  ? `${Math.round(
-                      convertToFahrenheit(weatherInfo.feelsLike)
-                    )}°F`
-                  : `${Math.round(weatherInfo.feelsLike)}°C`}
-              </span>
-            </div>
-            <br />
-            <div id="last-updated">
-              Last updated:{" "}
-              <span id="current-time">{weatherInfo.lastUpdated}</span>
+      <div>
+        <div className="row">
+          <div className="col-9 current-temperature" id="current-temp">
+            {Math.round(props.celsius)}°
+          </div>
+          <div className="col-3">
+            <div className="temperature-convert justify-content-end fs-4">
+              <button
+                href="/"
+                className="btn btn btn-outline-light active mb-3"
+                id="metric-button"
+              >
+                C
+              </button>
+              <button
+                href="/"
+                className="btn btn btn-outline-secondary"
+                id="imperial-button"
+                onClick={showImperial}
+              >
+                F
+              </button>
             </div>
           </div>
-          <div className="col-3" />
-          <div className="col">
-            <div className="row">
-              <div className="col no-padding">
-                <img
-                  className="icon centered-img"
-                  id="current-weather-icon"
-                  src={weatherInfo.imgSrc}
-                  alt={weatherInfo.description}
-                />
-              </div>
-              <div className="col align-self-center">
-                <div className="row no-gutters">
-                  <div className="col no-padding centered">
-                    <span id="current-temp">
-                      {useFahrenheit
-                        ? Math.round(convertToFahrenheit(weatherInfo.currTemp))
-                        : Math.round(weatherInfo.currTemp)}
-                    </span>
-                  </div>
-                  <div className="col align-self-center">
-                    <TempConversion
-                      useFahrenheit={useFahrenheit}
-                      setUseFahrenheit={setUseFahrenheit}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
-                <div className="centered" id="description">
-                  {weatherInfo.description}
-                </div>
-              </div>
-            </div>
+        </div>
+
+        <div className="row temperature-range text-middle">
+          <div className="col-4">
+            <p className="current-feel">
+              Feels like
+              <br />
+              <span className="data-highlight">{props.feel}°</span>
+            </p>
+          </div>
+          <div className="col-4">
+            <p className="temperature-low">
+              Low
+              <br />
+              <span className="data-highlight low-data">{props.low}°</span>
+            </p>
+          </div>
+          <div className="col-4">
+            <p className="temperature-high">
+              High
+              <br />
+              <span className="data-highlight high-data">{props.high}°</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="row weather-others text-middle mt-2">
+          <div className="col-4">
+            <p className="current-humidity">
+              Humidity
+              <br />
+              <span className="data-highlight">{props.humidity}%</span>
+            </p>
+          </div>
+          <div className="col-4">
+            <p className="current-wind">
+              Wind Speed
+              <br />
+              <span className="data-highlight">{props.wind} km/h</span>
+            </p>
+          </div>
+          <div className="col-4">
+            <p className="current-pressure">
+              Pressure
+              <br />
+              <span className="data-highlight">{props.pressure} mb</span>
+            </p>
           </div>
         </div>
       </div>
     );
   } else {
+    let fahrenheit = (props.celsius * 9) / 5 + 32;
+    let fahrenheitFeel = (props.feel * 9) / 5 + 32;
+    let fahrenheitLow = (props.low * 9) / 5 + 32;
+    let fahrenheitHigh = (props.high * 9) / 5 + 32;
+    let imperialWind = props.wind / 1.609;
+
     return (
-      <div className="WeatherInformation">
-        <div className="row top-level-row">
-          <div className="col">
-            <div className="align-self-center">
-              <h1>Loading...Please wait</h1>
+      <div>
+        <div className="row">
+          <div className="col-9 current-temperature" id="current-temp">
+            {Math.round(fahrenheit)}°
+          </div>
+          <div className="col-3">
+            <div className="temperature-convert justify-content-end fs-4">
+              <button
+                href="/"
+                className="btn btn btn-outline-light mb-3"
+                id="metric-button"
+                onClick={showMetric}
+              >
+                C
+              </button>
+              <button
+                href="/"
+                className="btn btn btn-outline-secondary active"
+                id="imperial-button"
+              >
+                F
+              </button>
             </div>
+          </div>
+        </div>
+
+        <div className="row temperature-range text-middle">
+          <div className="col-4">
+            <p className="current-feel">
+              Feels like
+              <br />
+              <span className="data-highlight">
+                {Math.round(fahrenheitFeel)}°
+              </span>
+            </p>
+          </div>
+          <div className="col-4">
+            <p className="temperature-low">
+              Low
+              <br />
+              <span className="data-highlight low-data">
+                {Math.round(fahrenheitLow)}°
+              </span>
+            </p>
+          </div>
+          <div className="col-4">
+            <p className="temperature-high">
+              High
+              <br />
+              <span className="data-highlight high-data">
+                {Math.round(fahrenheitHigh)}°
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div className="row weather-others text-middle mt-2">
+          <div className="col-4">
+            <p className="current-humidity">
+              Humidity
+              <br />
+              <span className="data-highlight">{props.humidity}%</span>
+            </p>
+          </div>
+          <div className="col-4">
+            <p className="current-wind">
+              Wind Speed
+              <br />
+              <span className="data-highlight">
+                {Math.round(imperialWind)} mph
+              </span>
+            </p>
+          </div>
+          <div className="col-4">
+            <p className="current-pressure">
+              Pressure
+              <br />
+              <span className="data-highlight">{props.pressure} mb</span>
+            </p>
           </div>
         </div>
       </div>
     );
   }
 }
+
+export default WeatherTemp;
