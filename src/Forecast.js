@@ -25,7 +25,7 @@ function Forecasts(props) {
     let latitude = props.coordinates.lat;
 
     const unitAPI = `metric`;
-    const keyAPI = `b234ec4305478a96889b3ecb891640e3`;
+    const keyAPI = `eb6e87b68658fd7031616791cee90a6f`;
     const urlAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${keyAPI}&units=${unitAPI}`;
     axios.get(urlAPI).then(handleResponse);
   }

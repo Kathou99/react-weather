@@ -13,7 +13,7 @@ function App() {
           </h1>
         </header>
 
-        <Search defaultLocation="Singapore" />
+        <Search defaultLocation="Val-D'Or" />
 
         <Footer />
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <div>
+    <div id="footer">
       <p className="coded-by text-middle mt-5">
         This app was created by {""}
         <a
@@ -26,7 +26,7 @@ function Footer() {
         <br />
         Open-sourced on {""}
         <a
-          href="https://github.com/sarahkydnc/shecodes-react-weather-app"
+          href="https://github.com/Kathou99/react-weather/tree/v3"
           target="_blank"
           rel="noreferrer"
           className="clickthru-links"
