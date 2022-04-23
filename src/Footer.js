@@ -8,7 +8,7 @@ function Footer() {
         <a
           href="https://kathouqccode.ca/"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="clickthru-links"
         >
           Katherine St-Amand ©
@@ -17,18 +17,18 @@ function Footer() {
         <a
           href="https://www.shecodes.io/react"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="clickthru-links"
         >
           SheCodes React
-        </a>{" "}
+        </a>{" "} 
         final projects.
         <br />
         Open-sourced on {""}
         <a
           href="https://github.com/Kathou99/react-weather/tree/v3"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="clickthru-links"
         >
           GitHub
@@ -37,7 +37,7 @@ function Footer() {
         <a
           href="https://www.netlify.com"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="clickthru-links"
         >
           Netlify
@@ -46,7 +46,7 @@ function Footer() {
         <a
           href="https://basmilius.github.io/weather-icons/index-line.html"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="clickthru-links"
         >
           Basmilius

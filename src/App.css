@@ -22,8 +22,7 @@ body {
 
 p,
 .subtitle,
-.forecast-day,
-.music-greeting {
+.forecast-day{
   color: var(--tertiary-color);
 }
 
@@ -179,20 +178,8 @@ h3 {
   text-align: center;
 }
 
-.weather-forecast,
-.spotify-api {
+.weather-forecast {
   max-width: 290px;
-}
-
-.spotify-api .music-greeting {
-  margin-bottom: 25px;
-  font-size: 15px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.spotify-api .spotify-player {
-  margin-top: 30px;
 }
 
 .coded-by {
@@ -243,7 +230,6 @@ h3 {
 #imperial-button {
   width: 50px;
 }
-
 
 body {
   background-image: url(https://i.imgur.com/bqY6hoh.jpg); /*fix later */

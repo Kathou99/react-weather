@@ -2,6 +2,7 @@ import Search from "./Search";
 import Footer from "./Footer";
 import React from 'react';
 import "./App.css";
+/* import "./translation/Traduction.js"; */
 
 function App() {
   return (
